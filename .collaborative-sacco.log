@@ -1,0 +1,64 @@
+$ next dev --webpack --webpack --hostname 0.0.0.0
+▲ Next.js 16.3.4 (webpack)
+- Local:         http://localhost:5002
+- Network:       http://0.0.0.0:5002
+✓ Ready in 1232ms
+✓ Running next.config.ts took 857ms
+  Skipping creating a lockfile at /data/data/com.termux/files/home/platform/collaborative-sacco/.next/dev/lock because we're using WASM bindings
+
+ GET / 200 in 3.1s (next.js: 2.5s, application-code: 530ms)
+[browser] Uncaught Error: Hydration failed because the server rendered text didn't match the client. As a result this tree will be regenerated on the client. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+https://react.dev/link/hydration-mismatch
+
+  ...
+    <HotReload globalError={[...]} webSocket={WebSocket} staticIndicatorState={{pathname:null, ...}}>
+      <AppDevOverlayErrorBoundary globalError={[...]}>
+        <ReplaySsrOnlyErrors>
+        <DevRootHTTPAccessFallbackBoundary>
+          <HTTPAccessFallbackBoundary notFound={<NotAllowedRootHTTPFallbackError>}>
+            <HTTPAccessFallbackErrorBoundary pathname="/" notFound={<NotAllowedRootHTTPFallbackError>} ...>
+              <RedirectBoundary>
+                <RedirectErrorBoundary router={{...}}>
+                  <Head>
+                  <__next_root_layout_boundary__>
+                    <SegmentViewNode type="layout" pagePath="layout.tsx">
+                      <SegmentTrieNode>
+                      <link>
+                      <RootLayout>
+                        <html
+                          lang="en"
+                          className="__variable_532bb9 __variable_482ce5 h-full antialiased"
+-                         crxlauncher-bridged=""
+-                         crxlauncher=""
+                        >
+                          ...
+                            <div className="grid gap-8...">
+                              <div>
+                              <div className="flex flex-...">
+                                <div>
+                                  <p>
+                                  <p className="font-display mt-2 text-4xl">
++                                   KES 8,885
+-                                   Ksh 8,885
+                                  ...
+                                ...
+                  ...
+
+    at <unknown> (https://react.dev/link/hydration-mismatch)
+    at p (<anonymous>)
+    at LoanCalculator (webpack-internal:///(app-pages-browser)/./components/loan-calculator.tsx:215:104)
+    at HomePage (about://React/Server/webpack-internal:///(rsc)/./app/(site)/page.tsx?89:490:106)
+ GET /login 200 in 1050ms (next.js: 962ms, application-code: 88ms)
+ GET /login 200 in 35ms (next.js: 4ms, application-code: 31ms)
+[browser] Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+ GET /login 200 in 19ms (next.js: 2ms, application-code: 16ms)
+[?25h

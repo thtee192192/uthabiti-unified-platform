@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uthabiti Africa - Identity Hub</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f4f6f9; margin: 0; padding: 40px 20px; color: #333; }
+        
+        /* 🔒 Hide content completely by default until authorization settles */
+        .dashboard-wrapper { max-width: 1100px; margin: 0 auto; display: none; }
+        
+        /* Banner Header Section */
+        .dash-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; background: white; padding: 20px 30px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.04); border-left: 5px solid #dc3545; }
+        .dash-header h1 { margin: 0; font-size: 24px; color: #111; }
+        .logout-btn { padding: 10px 20px; background: #dc3545; color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 14px; transition: background 0.2s; }
+        .logout-btn:hover { background: #bd2130; }
+
+        /* Unified Card Layout Matrix */
+        .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
+        .app-card { background: white; border-radius: 12px; padding: 25px; box-shadow: 0 2px 8px rgba(0,0,0,0.04); transition: transform 0.2s, box-shadow 0.2s; display: flex; flex-direction: column; text-decoration: none; color: inherit; position: relative; border-top: 4px solid #dc3545; box-sizing: border-box; }
+        .app-card:hover { transform: translateY(-4px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
+        
+        .card-title { font-size: 18px; font-weight: bold; margin-bottom: 10px; color: #111; text-transform: uppercase; letter-spacing: 0.5px; }
+        .card-desc { font-size: 13px; color: #666; line-height: 1.5; margin-bottom: 15px; flex-grow: 1; }
+        .launch-link { font-size: 12px; color: #dc3545; font-weight: bold; text-transform: uppercase; }
+
+        /* Embedded Profile Data Fields Box */
+        .profile-details { font-size: 12px; background: #f8f9fa; padding: 12px; border-radius: 6px; margin-bottom: 15px; border-left: 3px solid #6c757d; }
+        .profile-line { margin-bottom: 6px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        
+        /* Inline input parameters styling */
+        .update-box { display: flex; gap: 6px; }
+        .update-box input { flex-grow: 1; padding: 8px; border: 1px solid #ccc; border-radius: 4px; font-size: 12px; }
+        .update-box input:focus { border-color: #dc3545; outline: none; }
+        .update-box button { padding: 8px 12px; background: #343a40; color: white; border: none; border-radius: 4px; font-size: 12px; cursor: pointer; font-weight: bold; }
+        #emailStatus { font-size: 11px; margin-top: 6px; font-weight: bold; }
+        
+        /* Loading Status Splash Screen styling */
+        #loadingSplash { display: flex; justify-content: center; align-items: center; height: 70vh; font-size: 18px; font-weight: bold; color: #666; }
+    </style>
+</head>
+<body>
+
+<!-- Temporary placeholder while verification code executes -->
+<div id="loadingSplash">Verifying central identity session passport...</div>
+
+<div class="dashboard-wrapper">
+    
+    <div class="dash-header">
+        <div>
+            <a href="/" class="logo"><img src="images/Screenshot_2026-07-16-12-37-51-554_com.android.chrome-edit.jpg" alt="Uthabiti Africa Logo" style="height:40px;width:auto;object-fit:contain"></a>
+            <p style="margin: 5px 0 0 0; font-size: 14px; color: #666;">Digital Platform.</p>
+        </div>
+        <button class="logout-btn" id="logoutBtn">Log Out</button>
+    </div>
+
+    <!-- Application Suite Cards Grid -->
+    <div class="card-grid">
+        
+        <!-- CARD 1: My Profile (Active Endpoint Data Connections) -->
+        <div class="app-card">
+            <div class="card-title" style="color: #dc3545;">My Profile</div>
+            <div class="card-desc">Operational profile registry parameters and verification history records.</div>
+            <div class="profile-details">
+                <div class="profile-line"><strong>Identifier:</strong> <span id="userId">...</span></div>
+                <div class="profile-line"><strong>Active Email:</strong> <span id="userEmail">...</span></div>
+                <div class="profile-line"><strong>Registered:</strong> <span id="userCreated">...</span></div>
+            </div>
+            <div class="update-box">
+                <input type="email" id="newEmailField" placeholder="Modify system email">
+                <button onclick="updateEmail()">Apply</button>
+            </div>
+            <div id="emailStatus"></div>
+        </div>
+
+        <!-- CARD 2: MamaPlus -->
+        <a href="http://localhost:5001" target="_blank" class="app-card">
+            <div class="card-title">MamaPlus</div>
+            <div class="card-desc">Maternal and child support tools, caregiver resources, and family support workflows.</div>
+            <div class="launch-link">Open MamaPlus →</div>
+        </a>
+
+        <!-- CARD 3: Collaborative SACCO -->
+        <a href="http://localhost:5002" target="_blank" class="app-card">
+            <div class="card-title">Collaborative SACCO</div>
+            <div class="card-desc">Savings, loans, dividends, and cooperative member services using the shared identity system.</div>
+            <div class="launch-link">Open SACCO →</div>
+        </a>
+
+        <!-- CARD 4: NFW Uthabiti -->
+        <a href="http://localhost:5003" target="_blank" class="app-card">
+            <div class="card-title">NFW Uthabiti</div>
+            <div class="card-desc">Community work streams, programme coordination, and field-facing service access.</div>
+            <div class="launch-link">Open NFW →</div>
+        </a>
+
+        <!-- CARD 5: UTB Main -->
+        <a href="http://localhost:5004" target="_blank" class="app-card">
+            <div class="card-title">UTB Main</div>
+            <div class="card-desc">Main Uthabiti business portal and member-facing account access.</div>
+            <div class="launch-link">Open UTB →</div>
+        </a>
+
+        <!-- CARD 6: CAC Uthabiti -->
+        <a href="http://localhost:5005" target="_blank" class="app-card">
+            <div class="card-title">CAC Uthabiti</div>
+            <div class="card-desc">Client administration and institutional service portal connected to the same identity backend.</div>
+            <div class="launch-link">Open CAC →</div>
+        </a>
+
+    </div>
+</div>
+
+<script>
+    const token = localStorage.getItem('sessionToken')
+    if (!token) window.location.href = '/login.html'
+
+    // Retrieve active validation records automatically on runtime startup
+    async function loadData() {
+        try {
+            const res = await fetch('/api/profile', {
+                headers: { 'Authorization': `Bearer ${token}` }
+            })
+            const data = await res.json()
+            
+            if (res.ok) {
+                // 🌟 THE CRUCIAL FIX: Extract the first record out of the profile data array
+                const userProfile = data.profile
+
+                // Safely feed values into HTML layout containers without breaking execution lines
+                document.getElementById('userId').textContent = userProfile.id
+                document.getElementById('userEmail').textContent = userProfile.email
+                document.getElementById('userCreated').textContent = new Date(userProfile.created_at).toLocaleDateString()
+                
+                // Hide splash layout screen and bring the card wrapper forward smoothly
+                document.getElementById('loadingSplash').style.display = 'none'
+                document.querySelector('.dashboard-wrapper').style.display = 'block'
+            } else {
+                logout()
+            }
+        } catch (err) { 
+            console.error("Dashboard frontend script failed to parse profile array:", err)
+            logout() 
+        }
+    }
+
+    // Apply interactive sanitised PATCH changes to email entries
+    async function updateEmail() {
+        const newEmailField = document.getElementById('newEmailField')
+        const newEmail = newEmailField.value.trim()
+        const status = document.getElementById('emailStatus')
+        if (!newEmail) return
+
+        try {
+            status.textContent = 'Updating configuration...'
+            const res = await fetch('/api/profile/update-email', {
+                method: 'PATCH',
+                headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+                body: JSON.stringify({ newEmail })
+            })
+            const data = await res.json()
+            if (res.ok) {
+                status.style.color = 'green'
+                status.textContent = 'Update applied successfully.'
+                // 🌟 FIX 2: Handle the zero-indexed object row here as well
+                document.getElementById('userEmail').textContent = data.user[0].email
+                newEmailField.value = ''
+            } else {
+                status.style.color = 'red'
+                status.textContent = data.error || 'Update failed'
+            }
+        } catch { status.textContent = 'Server communications error' }
+    }
+
+    function logout() {
+        localStorage.removeItem('sessionToken')
+        window.location.href = '/index.html'
+    }
+
+    document.getElementById('logoutBtn').addEventListener('click', logout)
+    loadData()
+</script>
+</body>
